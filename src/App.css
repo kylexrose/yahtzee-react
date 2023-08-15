@@ -1,38 +1,53 @@
-.App {
+*{
+  font-size: small;
+}
+
+body{
+  body {  min-width:750px;
+          min-height: 1500px; };
+  margin: 50px;
+  background-color: darkslategray;
+}
+
+img{
+  height: 15px;
+}
+
+table, th, td {
+  border: 1px solid white;
+  color: white;
+  border-collapse: collapse;
+  padding: 3px;
+}
+
+.cell{
+  width: 39px;
+}
+
+.howToScore{
+  width: 150px;
+}
+
+td{
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.col1{
+  width: 100px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.bonusCell{
+  border: 1px white solid;
+  width: inherit;
+  height: inherit;
+  align-self: stretch;
+  justify-self: stretch;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.yahtzeeBonusCells.game1{
+  display: grid;
+  grid-template-columns:repeat(3, 1fr);
+  border: none;
+  padding: 0;
+  height: 24px;
 }
