@@ -9,6 +9,17 @@ function DiceCup({dicePics,
                   currentRollCount, 
                   setCurrentRollCount
                 }) {
+          
+    useEffect(() => {
+      if(currentRollCount === 0){
+        setIsDice1Held(false)
+        setIsDice2Held(false)
+        setIsDice3Held(false)
+        setIsDice4Held(false)
+        setIsDice5Held(false)
+      }
+    }, [currentRollCount])
+    
 
 
     const [isDice1Held, setIsDice1Held] = useState(false);
@@ -24,6 +35,7 @@ function DiceCup({dicePics,
 
 
     const onClickDie = (e) =>{
+      if(currentRollCount > 0 && currentRollCount < 3)
         switch(e.target.id){
             case 'dice1': 
                 setIsDice1Held(!isDice1Held);
