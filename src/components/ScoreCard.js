@@ -12,6 +12,7 @@ import DiceCup from './DiceCup';
 function ScoreCard({scoreCard, setScoreCard}) {
     const [currentRollCount, setCurrentRollCount] = useState(0);
     const [diceRead, setDiceRead] = useState([5,5,5,5,5]);
+    const [currentGame, setCurrentGame] = useState(1);
 
     const dicePics = {
     1 : dice1,
@@ -28,21 +29,13 @@ function ScoreCard({scoreCard, setScoreCard}) {
     }
 
     const handleClick = (e) =>{
-        switch(e.target.id){
-            case 'acesScore': {
-                let sc = {'aces' : scoring('aces', diceRead), ...scoreCard};
-                console.log(sc)
-                setScoreCard({'aces' : scoring('aces', diceRead), ...scoreCard});
-                break;}
-
-            default: break;
+        const id = e.target.id;
+        if(!scoreCard[id] && currentRollCount > 0){
+            let score = scoring(id, diceRead);
+            setScoreCard({...scoreCard, [id] : scoring(id, diceRead)});
+            setCurrentRollCount(0);
         }
     }
-
-    useEffect(() => {
-      console.log(scoreCard)
-    }, [scoreCard])
-    
 
     return (
     <div className="App">
@@ -66,7 +59,7 @@ function ScoreCard({scoreCard, setScoreCard}) {
                     <tr className="ones game1">
                         <td className="col1">Aces <img src={dice1} className="diceImg"/> =1</td>
                         <td className="howToScore">Count and add only Aces</td>
-                        <td onClick={(e) => {handleClick(e)}} id = "acesScore" className="ones game1 cell"></td>
+                        <td onClick={(e) => {handleClick(e)}} id = "acesScore" className="ones game1 cell">{scoreCard['acesScore']}</td>
                         <td className="ones game2 cell"></td>
                         <td className="ones game3 cell"></td>
                         <td className="ones game4 cell"></td>
@@ -76,7 +69,7 @@ function ScoreCard({scoreCard, setScoreCard}) {
                     <tr className="twos">
                         <td className="col1">Twos <img src={dice2} className="diceImg"/> =2</td>
                         <td className="howToScore">Count and add only Twos</td>
-                        <td className="twos game1 cell"></td>
+                        <td onClick={(e) => {handleClick(e)}} id = "twosScore" className="twos game1 cell">{scoreCard['twosScore']}</td>
                         <td className="twos game2 cell"></td>
                         <td className="twos game3 cell"></td>
                         <td className="twos game4 cell"></td>
@@ -86,7 +79,7 @@ function ScoreCard({scoreCard, setScoreCard}) {
                     <tr className="threes">
                         <td className="col1">Threes <img src={dice3} className="diceImg"/> =3</td>
                         <td className="howToScore">Count and add only Threes</td>
-                        <td className="threes game1 cell"></td>
+                        <td onClick={(e) => {handleClick(e)}} id = "threesScore" className="threes game1 cell">{scoreCard['threesScore']}</td>
                         <td className="threes game2 cell"></td>
                         <td className="threes game3 cell"></td>
                         <td className="threes game4 cell"></td>
@@ -96,7 +89,7 @@ function ScoreCard({scoreCard, setScoreCard}) {
                     <tr className="fours">
                         <td className="col1">Fours <img src={dice4} className="diceImg"/> =4</td>
                         <td className="howToScore">Count and add only Fours</td>
-                        <td className="fours game1 cell"></td>
+                        <td onClick={(e) => {handleClick(e)}} id = "foursScore" className="fours game1 cell">{scoreCard['foursScore']}</td>
                         <td className="fours game2 cell"></td>
                         <td className="fours game3 cell"></td>
                         <td className="fours game4 cell"></td>
@@ -106,7 +99,7 @@ function ScoreCard({scoreCard, setScoreCard}) {
                     <tr className="fives">
                         <td className="col1">Fives <img src={dice5} className="diceImg"/> =5</td>
                         <td className="howToScore">Count and add only Fives</td>
-                        <td className="fives game1 cell"></td>
+                        <td onClick={(e) => {handleClick(e)}} id = "fivesScore" className="fives game1 cell">{scoreCard['fivesScore']}</td>
                         <td className="fives game2 cell"></td>
                         <td className="fives game3 cell"></td>
                         <td className="fives game4 cell"></td>
@@ -116,7 +109,7 @@ function ScoreCard({scoreCard, setScoreCard}) {
                     <tr className="sixes">
                         <td className="col1">Sixes <img src={dice6} className="diceImg"/> =6</td>
                         <td className="howToScore">Count and add only Sixes</td>
-                        <td className="sixes game1 cell"></td>
+                        <td onClick={(e) => {handleClick(e)}} id = "sixesScore" className="sixes game1 cell">{scoreCard['sixesScore']}</td>
                         <td className="sixes game2 cell"></td>
                         <td className="sixes game3 cell"></td>
                         <td className="sixes game4 cell"></td>
@@ -136,7 +129,7 @@ function ScoreCard({scoreCard, setScoreCard}) {
                     <tr className="bonus col1">
                         <td>Bonus <span>If your score is 63 or over</span></td>
                         <td className="howToScore">Score 35</td>
-                        <td className="bonus game1 cell"></td>
+                        <td id = "bonusScore" className="bonus game1 cell">{scoreCard['bonusScore']}</td>
                         <td className="bonus game2 cell"></td>
                         <td className="bonus game3 cell"></td>
                         <td className="bonus game4 cell"></td>
@@ -163,7 +156,7 @@ function ScoreCard({scoreCard, setScoreCard}) {
                     <tr>
                         <td className="col1">Three of a Kind</td>
                         <td className="howToScore">Add Total of All Dice</td>
-                        <td className="threeOfKind game1 cell"></td>
+                        <td onClick={(e) => {handleClick(e)}} id = "threeOfKindScore" className="threeOfKind game1 cell">{scoreCard['threeOfKindScore']}</td>
                         <td className="threeOfKind game2 cell"></td>
                         <td className="threeOfKind game3 cell"></td>
                         <td className="threeOfKind game4 cell"></td>
@@ -173,7 +166,7 @@ function ScoreCard({scoreCard, setScoreCard}) {
                     <tr>
                         <td className="col1">Four of a Kind</td>
                         <td className="howToScore">Add Total of All Dice</td>
-                        <td className="fourOfKind game1 cell"></td>
+                        <td onClick={(e) => {handleClick(e)}} id = "fourOfKindScore" className="fourOfKind game1 cell">{scoreCard['fourOfKindScore']}</td>
                         <td className="fourOfKind game2 cell"></td>
                         <td className="fourOfKind game3 cell"></td>
                         <td className="fourOfKind game4 cell"></td>
@@ -183,7 +176,7 @@ function ScoreCard({scoreCard, setScoreCard}) {
                     <tr>
                         <td className="col1">Full House</td>
                         <td className="howToScore">Score 25</td>
-                        <td className="fullHouse game1 cell"></td>
+                        <td onClick={(e) => {handleClick(e)}} id = "fullHouseScore" className="fullHouse game1 cell">{scoreCard['fullHouseScore']}</td>
                         <td className="fullHouse game2 cell"></td>
                         <td className="fullHouse game3 cell"></td>
                         <td className="fullHouse game4 cell"></td>
@@ -193,7 +186,7 @@ function ScoreCard({scoreCard, setScoreCard}) {
                     <tr>
                         <td className="col1">sm. Straight <span>Sequence of 4</span></td>
                         <td className="howToScore">Score 30</td>
-                        <td className="smStraight game1 cell"></td>
+                        <td onClick={(e) => {handleClick(e)}} id = "smStrScore" className="smStr game1 cell">{scoreCard['smStrScore']}</td>
                         <td className="smStraight game2 cell"></td>
                         <td className="smStraight game3 cell"></td>
                         <td className="smStraight game4 cell"></td>
@@ -203,7 +196,7 @@ function ScoreCard({scoreCard, setScoreCard}) {
                     <tr>
                         <td className="col1">lg. Straight <span>Sequence of 5</span></td>
                         <td className="howToScore">Score 40</td>
-                        <td className="lgStraight game1 cell"></td>
+                        <td onClick={(e) => {handleClick(e)}} id = "lgStrScore" className="lgStr game1 cell">{scoreCard['lgStrScore']}</td>
                         <td className="lgStraight game2 cell"></td>
                         <td className="lgStraight game3 cell"></td>
                         <td className="lgStraight game4 cell"></td>
@@ -213,7 +206,7 @@ function ScoreCard({scoreCard, setScoreCard}) {
                     <tr>
                         <td className="col1">Yahtzee <span>5 of a Kind</span></td>
                         <td className="howToScore">Score 50</td>
-                        <td className="yahtzee game1 cell"></td>
+                        <td onClick={(e) => {handleClick(e)}} id = "yahtzeeScore" className="yahtzee game1 cell">{scoreCard['yahtzeeScore']}</td>
                         <td className="yahtzee game2 cell"></td>
                         <td className="yahtzee game3 cell"></td>
                         <td className="yahtzee game4 cell"></td>
@@ -246,7 +239,7 @@ function ScoreCard({scoreCard, setScoreCard}) {
                     <tr>
                         <td className="col1">Chance</td>
                         <td className="howToScore">Add Total of All Dice</td>
-                        <td className="chance game1 cell"></td>
+                        <td onClick={(e) => {handleClick(e)}} id = "chanceScore" className="chance game1 cell">{scoreCard['chanceScore']}</td>
                         <td className="chance game2 cell"></td>
                         <td className="chance game3 cell"></td>
                         <td className="chance game4 cell"></td>
